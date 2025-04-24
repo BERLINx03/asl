@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { useAuth } from './context/AuthContext';
 import {
   Login,
   Register,
@@ -16,14 +17,13 @@ import {
 } from './pages';
 
 const App = () => {
-  // Mock auth check - in a real app, would check for JWT token
-  const isAuthenticated = localStorage.getItem('token') !== null;
+  const { isAuthenticated } = useAuth();
 
   return (
     <Router>
       <Routes>
         {/* Auth Routes */}
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={!isAuthenticated ? <Login /> : <Navigate to="/detection" />} />
         <Route path="/register" element={<Register />} />
         
         {/* Protected Routes */}
