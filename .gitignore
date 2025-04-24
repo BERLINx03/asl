@@ -1,0 +1,282 @@
+# ASP.NET Core
+## Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+build/
+bld/
+bin/
+Bin/
+obj/
+Obj/
+
+# Visual Studio and VS Code files
+.vs/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+.idea/
+
+# NuGet packages
+*.nupkg
+# The packages folder can be ignored because of Package Restore
+**/packages/*
+# except build/, which is used as an MSBuild target
+!**/packages/build/
+# Uncomment if necessary however generally it will be regenerated when needed
+#!**/packages/repositories.config
+
+# MSTest test Results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+
+# NUNIT
+*.VisualState.xml
+TestResult.xml
+
+# Build Results of an ATL Project
+[Dd]ebugPS/
+[Rr]eleasePS/
+dlldata.c
+
+# DNX
+project.lock.json
+artifacts/
+
+*_i.c
+*_p.c
+*_i.h
+*.ilk
+*.meta
+*.obj
+*.pch
+*.pdb
+*.pgc
+*.pgd
+*.rsp
+*.sbr
+*.tlb
+*.tli
+*.tlh
+*.tmp
+*.tmp_proj
+*.log
+*.vspscc
+*.vssscc
+.builds
+*.pidb
+*.svclog
+*.scc
+
+# Chutzpah Test files
+_Chutzpah*
+
+# Visual C++ cache files
+ipch/
+*.aps
+*.ncb
+*.opendb
+*.opensdf
+*.sdf
+*.cachefile
+
+# Visual Studio profiler
+*.psess
+*.vsp
+*.vspx
+*.sap
+
+# TFS 2012 Local Workspace
+$tf/
+
+# Guidance Automation Toolkit
+*.gpState
+
+# ReSharper files
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+# JustCode
+.JustCode
+
+# TeamCity files
+_TeamCity*
+
+# DotCover files
+*.dotCover
+
+# NCrunch
+_NCrunch_*
+.*crunch*.local.xml
+nCrunchTemp_*
+
+# MightyMoose
+*.mm.*
+AutoTest.Net/
+
+# Web workbench (sass)
+.sass-cache/
+
+# Installshield output folder
+[Ee]xpress/
+
+# DocProject
+DocProject/buildhelp/
+DocProject/Help/*.HxT
+DocProject/Help/*.HxC
+DocProject/Help/*.hhc
+DocProject/Help/*.hhk
+DocProject/Help/*.hhp
+DocProject/Help/Html2
+DocProject/Help/html
+
+# Click-Once directory
+publish/
+
+# Publish Web Output
+*.[Pp]ublish.xml
+*.azurePubxml
+# TODO: Comment the next line if you want to checkin your web deploy settings
+# but database connection strings (with potential passwords) will be unencrypted
+*.pubxml
+*.publishproj
+
+# Database files
+*.mdf
+*.ldf
+
+# Business Intelligence projects
+*.rdl.data
+*.bim.layout
+*.bim_*.settings
+
+# Microsoft Fakes
+FakesAssemblies/
+
+# GhostDoc plugin files
+*.GhostDoc.xml
+
+# Node.js Tools
+node_modules/
+jspm_packages/
+bower_components/
+
+# Misc
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# SQLite database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Logs
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# SSL certificate files
+*.pfx
+*.key
+*.crt
+*.pem 
+
+# ASP.NET Core specific
+ASL.Backend/bin/
+ASL.Backend/obj/
+ASL.Backend/*.user
+ASL.Backend/Properties/launchSettings.json
+ASL.Backend/.config/dotnet-tools.json
+ASL.Backend/*.dlls.json
+ASL.Backend/bin/Debug/net9.0/ASL.Backend.dll
+ASL.Backend/bin/Debug/net9.0/ASL.Backend.exe
+ASL.Backend/bin/Debug/net9.0/ASL.Backend.pdb
+
+# Python recognition specific
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Python virtual environments
+venv/
+ENV/
+.venv/
+.env/
+env.bak/
+venv.bak/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Machine learning specific
+asl_recognition/data/raw/
+asl_recognition/data/processed/
+asl_recognition/models/saved/
+asl_recognition/models/trained/
+asl_recognition/models/checkpoints/
+*.h5
+*.hdf5
+*.pkl
+*.joblib
+*.model
+*.weights
+*.pt
+*.pth
+*.onnx
+*.tflite
+
+# Temporary image/video files
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.mp4
+*.avi
+!/asl_recognition/data/examples/
+!/ASL.Backend/wwwroot/images/
+
+# API keys and secrets
+**/secrets.json
+*appsettings.*.json
+!*appsettings.json 

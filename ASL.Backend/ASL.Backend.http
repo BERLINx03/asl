@@ -1,0 +1,6 @@
+@ASL.Backend_HostAddress = http://localhost:5156
+
+GET {{ASL.Backend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
