@@ -6,11 +6,10 @@ namespace ASL.Backend.Data;
 
 public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 {
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+    public ApplicationDbContext(DbContextOptions options)
         : base(options)
     {
     }
-
     public DbSet<GameMatch> GameMatches { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
@@ -35,5 +34,17 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
             .WithMany()
             .HasForeignKey(m => m.WinnerId)
             .OnDelete(DeleteBehavior.Restrict);
+
+        // Configure SQLite to use TEXT type for all string properties
+        foreach (var entityType in builder.Model.GetEntityTypes())
+        {
+            foreach (var property in entityType.GetProperties())
+            {
+                if (property.ClrType == typeof(string))
+                {
+                    property.SetColumnType("TEXT");
+                }
+            }
+        }
     }
 }

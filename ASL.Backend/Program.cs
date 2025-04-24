@@ -70,11 +70,8 @@ builder.Services.AddSwaggerGen(options =>
 // Configure database
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
-    // Use in-memory database for development/testing
-    options.UseInMemoryDatabase("ASL_MatchmakingDB");
-
-    // Comment out SQL Server configuration until it's properly set up
-    // options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+    // Use SQLite database instead of SQL Server
+    options.UseSqlite(builder.Configuration.GetConnectionString("SqliteConnection"));
 });
 
 // Configure Identity
