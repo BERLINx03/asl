@@ -2,6 +2,7 @@ using ASL.Backend.Models;
 using ASL.Backend.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Net;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -65,14 +66,9 @@ public class AuthController : ControllerBase
 
         _logger.LogInformation("User {UserId} created a new account", user.Id);
 
-        // Generate token
-        var roles = await _userManager.GetRolesAsync(user);
-        var token = _tokenService.GenerateJwtToken(user, roles);
-
         var response = new AuthResponse
         {
             Success = true,
-            Token = token,
             UserId = user.Id,
             Username = user.UserName,
             Message = "Registration successful"

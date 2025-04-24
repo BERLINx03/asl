@@ -91,18 +91,6 @@ public class AuthResponse
     public string? Token { get; set; }
 
     /// <summary>
-    /// Refresh token for getting a new JWT (when implemented)
-    /// </summary>
-    [JsonPropertyName("refreshToken")]
-    public string? RefreshToken { get; set; }
-
-    /// <summary>
-    /// When the token expires
-    /// </summary>
-    [JsonPropertyName("expiration")]
-    public DateTime? Expiration { get; set; }
-
-    /// <summary>
     /// Message describing the authentication result
     /// </summary>
     [JsonPropertyName("message")]

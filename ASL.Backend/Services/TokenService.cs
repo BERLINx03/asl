@@ -17,24 +17,27 @@ public class TokenService
 
     public string GenerateJwtToken(ApplicationUser user, IList<string> roles)
     {
+        // Use shorter claim types to reduce token size
         var claims = new List<Claim>
         {
-            new Claim(JwtRegisteredClaimNames.Sub, user.Id),
-            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-            new Claim(ClaimTypes.NameIdentifier, user.Id),
-            new Claim(ClaimTypes.Name, user.UserName ?? string.Empty),
-            new Claim(ClaimTypes.Email, user.Email ?? string.Empty)
+            // Use "sub" instead of ClaimTypes.NameIdentifier (which is much longer)
+            new Claim("sub", user.Id),
+            // Include only essential claims
+            new Claim("name", user.UserName ?? string.Empty),
+            new Claim("email", user.Email ?? string.Empty)
         };
 
-        // Add roles to claims
-        foreach (var role in roles)
+        // Add roles using a shorter claim name
+        if (roles.Any())
         {
-            claims.Add(new Claim(ClaimTypes.Role, role));
+            claims.Add(new Claim("role", string.Join(",", roles)));
         }
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"] ?? throw new InvalidOperationException("JWT Secret not configured")));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-        var expires = DateTime.UtcNow.AddDays(1);
+
+        // Shorter expiration time (4 hours instead of 1 day)
+        var expires = DateTime.UtcNow.AddHours(4);
 
         var token = new JwtSecurityToken(
             issuer: _configuration["JWT:ValidIssuer"],
