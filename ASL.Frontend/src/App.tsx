@@ -9,6 +9,7 @@ import {
   LtoPExercise,
   QtoUExercise,
   VtoZExercise,
+  ExercisesIndex,
   DictionaryPage,
   CreateMatch,
   JoinMatch,
@@ -67,6 +68,16 @@ const App = () => {
           element={
             <Layout>
               <DetectionPage />
+            </Layout>
+          } 
+        />
+        
+        {/* Exercises Index Route */}
+        <Route 
+          path="/exercises" 
+          element={
+            <Layout>
+              <ExercisesIndex />
             </Layout>
           } 
         />

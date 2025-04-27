@@ -14,16 +14,7 @@ const Navbar = () => {
           <Link to="/detection">Detection</Link>
         </li>
         <li className={location.pathname.includes('/exercises') ? 'active' : ''}>
-          <div className="dropdown">
-            <span>Exercises</span>
-            <div className="dropdown-content">
-              <Link to="/exercises/a-f">A-F</Link>
-              <Link to="/exercises/g-k">G-K</Link>
-              <Link to="/exercises/l-p">L-P</Link>
-              <Link to="/exercises/q-u">Q-U</Link>
-              <Link to="/exercises/v-z">V-Z</Link>
-            </div>
-          </div>
+          <Link to="/exercises">Exercises</Link>
         </li>
         <li className={location.pathname === '/dictionary' ? 'active' : ''}>
           <Link to="/dictionary">Dictionary</Link>

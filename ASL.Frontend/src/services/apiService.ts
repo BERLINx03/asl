@@ -134,6 +134,7 @@ export const gameApi = {
 
 // ASL Recognition API endpoints
 export const aslRecognitionApi = {
+  // Standard detection with default model
   detectSign: async (imageBase64: string) => {
     try {
       console.log('Sending detection request to:', `${ASL_API_URL}/predict/base64`);
@@ -156,6 +157,44 @@ export const aslRecognitionApi = {
       return handleResponse(response);
     } catch (error) {
       console.error('ASL Recognition API error:', error);
+      throw error;
+    }
+  },
+  
+  // Prediction with optional specialized model
+  predictBase64: async (imageBase64: string, modelName?: string) => {
+    try {
+      console.log(`Sending prediction request using model: ${modelName || 'general'}`);
+      
+      const response = await fetch(`${ASL_API_URL}/predict/base64`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          image: imageBase64,
+          model: modelName
+        })
+      });
+      
+      if (!response.ok) {
+        console.log('Prediction error response:', await response.clone().text());
+      }
+      
+      return handleResponse(response);
+    } catch (error) {
+      console.error('ASL Recognition prediction error:', error);
+      throw error;
+    }
+  },
+  
+  // Get available models
+  getAvailableModels: async () => {
+    try {
+      const response = await fetch(`${ASL_API_URL}/models`);
+      return handleResponse(response);
+    } catch (error) {
+      console.error('Error fetching available models:', error);
       throw error;
     }
   },
