@@ -1,6 +1,7 @@
 export { default as AtoFExercise } from './AtoFExercise';
-export { default as GtoKExercise } from './GtoK';
-export { default as LtoPExercise } from './LtoP';
-export { default as QtoUExercise } from './QtoU';
-export { default as VtoZExercise } from './VtoZ';
+// TODO: Add the other exercises
+// export { default as AtoFExercise } from './GtoKExercise';
+// export { default as AtoFExercise } from './LtoPExercise';
+// export { default as AtoFExercise } from './QtoUExercise';
+// export { default as AtoFExercise } from './VtoZExercise';
 export { default as ExercisesPage } from './ExercisesPage'; 

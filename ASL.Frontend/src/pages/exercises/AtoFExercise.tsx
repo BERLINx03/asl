@@ -587,16 +587,6 @@ const AtoFExercise = () => {
                   flexDirection: 'column',
                   gap: '20px'
                 }}>
-                  <h2 style={{ 
-                    margin: '0',
-                    textAlign: 'center',
-                    fontSize: '24px',
-                    fontWeight: '600',
-                    color: '#f9bf2e'
-                  }}>
-                    Current Letter: <span style={{ fontSize: '28px', marginLeft: '5px' }}>{currentSign}</span>
-                  </h2>
-                  
                   <div style={{
                     display: 'flex',
                     flexDirection: 'column',
@@ -605,11 +595,10 @@ const AtoFExercise = () => {
                   }}>
                     <div className="letter-image-container" 
                       style={{
-                        width: '170px',
-                        height: '170px',
+                        width: '220px',
+                        height: '220px',
                         backgroundColor: 'transparent',
                         display: 'flex',
-                        flexDirection: 'column',
                         justifyContent: 'center',
                         alignItems: 'center',
                         position: 'relative',
@@ -619,8 +608,9 @@ const AtoFExercise = () => {
                         src={getCurrentLetterImage()}
                         alt={`Sign for letter ${currentSign}`}
                         style={{
-                          maxWidth: '100%',
-                          maxHeight: '100%',
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'contain',
                           display: 'block',
                           filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))'
                         }}
