@@ -1,5 +1,5 @@
 // Base API URL
-const API_URL = 'http://localhost:5156/api';
+const API_URL = 'http://localhost:5000/api';
 // ASL Recognition API URL
 const ASL_API_URL = 'http://localhost:8000';
 // A-to-F Recognition API URL
@@ -92,6 +92,8 @@ export const authApi = {
 // Game API endpoints
 export const gameApi = {
   createMatch: async (difficulty: string) => {
+    
+    console.error('WWW:', JSON.stringify(difficulty));
     const response = await fetch(`${API_URL}/Game/create`, {
       method: 'POST',
       headers: {
@@ -101,6 +103,12 @@ export const gameApi = {
       body: JSON.stringify({ difficulty })
     });
     
+    console.error('XXX:', JSON.stringify(response.status));
+    if(response.status === 401) {
+      console.error('Unauthorized access. Please log in again.');
+      localStorage.removeItem('token');
+      window.location.href = '/login'; 
+    }
     return handleResponse(response);
   },
   
@@ -116,7 +124,27 @@ export const gameApi = {
     
     return handleResponse(response);
   },
-  
+
+  completeMatch: async (matchId: string, userId: string) => {
+    const response = await fetch(`${API_URL}/Game/complete`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...getAuthHeader()
+      },
+      body: JSON.stringify({ matchId , userId})
+    });
+    
+    const handleResponse = async (response: Response) => {
+      const data = await response.json();
+      if (!response.ok) {
+        console.error('API error response:', data);
+        throw new Error(data.message || data.errors?.join(', ') || 'An error occurred');
+      }
+      return data;
+    };
+  },
+
   getActiveMatches: async () => {
     const response = await fetch(`${API_URL}/Game/active`, {
       headers: getAuthHeader()
@@ -130,6 +158,24 @@ export const gameApi = {
       headers: getAuthHeader()
     });
     
+    return handleResponse(response);
+  },
+  getMatch: async (matchId: string) => {
+    const response = await fetch(`${API_URL}/Game/${matchId}`, {
+      headers: getAuthHeader()
+    });
+    
+    return handleResponse(response);
+  },
+  checkMatchStatus: async (matchId: string) => {
+    const response = await fetch(`${API_URL}/Game/status`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...getAuthHeader(),
+      },
+      body: JSON.stringify({ matchId }),
+    });
     return handleResponse(response);
   }
 };

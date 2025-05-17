@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
+import { gameApi } from '../../services/apiService';
 
-interface MatchHistory {
+interface MatchHistoryX {
   id: string;
   playerA: string;
   playerB: string;
@@ -10,7 +11,24 @@ interface MatchHistory {
   startTime: string;
   endTime: string;
 }
+ interface UserMatchesResponse {
+  success: boolean;
+  message: string;
+  data: MatchHistory[];
+  errors: any; // You can replace `any` if you have a specific structure for errors
+}
 
+ interface MatchHistory {
+  id: string;
+  playerAUsername: string;
+  playerBUsername: string | null;
+  winnerUsername: string | null;
+  sentence: string | null;
+  difficulty: 'easy' | 'medium' | 'hard'; // You can expand if you have more levels
+  startTime: string; // ISO 8601 date-time string
+  endTime: string | null;
+  isActive: boolean;
+}
 const MatchHistory = () => {
   const [matches, setMatches] = useState<MatchHistory[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -22,6 +40,16 @@ const MatchHistory = () => {
       setError(null);
 
       try {
+        const response = await gameApi.getUserMatches() as UserMatchesResponse;
+                      if (response.success) {
+                        setTimeout(() => {
+                          setMatches(response.data);
+                          setIsLoading(false);
+                        }, 1000);
+                      } else {
+                        console.error('Error creating match:', response.errors);
+                      }
+
         // TODO: Implement API call to fetch match history
         // const response = await fetch('/api/Game/user', {
         //   headers: {
@@ -37,41 +65,41 @@ const MatchHistory = () => {
         // setMatches(data.matches);
 
         // Mock data for now
-        setTimeout(() => {
-          setMatches([
-            {
-              id: 'match1',
-              playerA: 'CurrentUser',
-              playerB: 'Opponent1',
-              winner: 'CurrentUser',
-              difficulty: 'Easy',
-              sentence: 'Hello world',
-              startTime: new Date(Date.now() - 86400000).toISOString(), // Yesterday
-              endTime: new Date(Date.now() - 86400000 + 300000).toISOString() // Yesterday + 5 minutes
-            },
-            {
-              id: 'match2',
-              playerA: 'Opponent2',
-              playerB: 'CurrentUser',
-              winner: 'Opponent2',
-              difficulty: 'Medium',
-              sentence: 'Nice to meet you',
-              startTime: new Date(Date.now() - 172800000).toISOString(), // 2 days ago
-              endTime: new Date(Date.now() - 172800000 + 450000).toISOString() // 2 days ago + 7.5 minutes
-            },
-            {
-              id: 'match3',
-              playerA: 'CurrentUser',
-              playerB: 'Opponent3',
-              winner: 'CurrentUser',
-              difficulty: 'Hard',
-              sentence: 'ASL is awesome',
-              startTime: new Date(Date.now() - 259200000).toISOString(), // 3 days ago
-              endTime: new Date(Date.now() - 259200000 + 600000).toISOString() // 3 days ago + 10 minutes
-            }
-          ]);
-          setIsLoading(false);
-        }, 1000);
+        // setTimeout(() => {
+        //   setMatches([
+        //     {
+        //       id: 'match1',
+        //       playerA: 'CurrentUser',
+        //       playerB: 'Opponent1',
+        //       winner: 'CurrentUser',
+        //       difficulty: 'Easy',
+        //       sentence: 'Hello world',
+        //       startTime: new Date(Date.now() - 86400000).toISOString(), // Yesterday
+        //       endTime: new Date(Date.now() - 86400000 + 300000).toISOString() // Yesterday + 5 minutes
+        //     },
+        //     {
+        //       id: 'match2',
+        //       playerA: 'Opponent2',
+        //       playerB: 'CurrentUser',
+        //       winner: 'Opponent2',
+        //       difficulty: 'Medium',
+        //       sentence: 'Nice to meet you',
+        //       startTime: new Date(Date.now() - 172800000).toISOString(), // 2 days ago
+        //       endTime: new Date(Date.now() - 172800000 + 450000).toISOString() // 2 days ago + 7.5 minutes
+        //     },
+        //     {
+        //       id: 'match3',
+        //       playerA: 'CurrentUser',
+        //       playerB: 'Opponent3',
+        //       winner: 'CurrentUser',
+        //       difficulty: 'Hard',
+        //       sentence: 'ASL is awesome',
+        //       startTime: new Date(Date.now() - 259200000).toISOString(), // 3 days ago
+        //       endTime: new Date(Date.now() - 259200000 + 600000).toISOString() // 3 days ago + 10 minutes
+        //     }
+        //   ]);
+        //   setIsLoading(false);
+        // }, 1000);
       } catch (error) {
         setError('Failed to load match history. Please try again.');
         setIsLoading(false);
@@ -125,8 +153,8 @@ const MatchHistory = () => {
             </thead>
             <tbody>
               {matches.map(match => {
-                const isWinner = match.winner === 'CurrentUser';
-                const playerName = match.playerA === 'CurrentUser' ? match.playerB : match.playerA;
+                const isWinner = match.winnerUsername === 'CurrentUser';
+                const playerName = match.playerAUsername === 'CurrentUser' ? match.playerBUsername : match.playerAUsername;
                 
                 return (
                   <tr key={match.id} className={isWinner ? 'win' : 'loss'}>
@@ -134,7 +162,7 @@ const MatchHistory = () => {
                     <td>vs {playerName}</td>
                     <td>{match.sentence}</td>
                     <td>{match.difficulty}</td>
-                    <td>{getMatchDuration(match.startTime, match.endTime)}</td>
+                    <td>{match.endTime ? getMatchDuration(match.startTime, match.endTime) : 'N/A'}</td>
                     <td>
                       <span className={`result ${isWinner ? 'win-text' : 'loss-text'}`}>
                         {isWinner ? 'Win' : 'Loss'}
@@ -157,13 +185,13 @@ const MatchHistory = () => {
           </div>
           <div className="stat-box">
             <div className="stat-label">Wins</div>
-            <div className="stat-value">{matches.filter(m => m.winner === 'CurrentUser').length}</div>
+            <div className="stat-value">{matches.filter(m => m.winnerUsername === 'CurrentUser').length}</div>
           </div>
           <div className="stat-box">
             <div className="stat-label">Win Rate</div>
             <div className="stat-value">
               {matches.length > 0 
-                ? `${Math.round((matches.filter(m => m.winner === 'CurrentUser').length / matches.length) * 100)}%` 
+                ? `${Math.round((matches.filter(m => m.winnerUsername === 'CurrentUser').length / matches.length) * 100)}%` 
                 : '0%'}
             </div>
           </div>

@@ -5,10 +5,10 @@ import {
   Register,
   DetectionPage,
   AtoFExercise,
-  GtoKExercise,
-  LtoPExercise,
-  QtoUExercise,
-  VtoZExercise,
+  // GtoKExercise,
+  // LtoPExercise,
+  // QtoUExercise,
+  // VtoZExercise,
   ExercisesPage,
   DictionaryPage,
   CreateMatch,
@@ -18,6 +18,8 @@ import {
 } from './pages';
 import { Navbar } from './components';
 import './App.css';
+// import GamePage from './pages/pvp/GamePage';
+import GameBPage from './pages/pvp/GameBPage';
 
 // Layout component that includes Navbar
 const Layout = ({ children, requireAuth = true }: { children: React.ReactNode, requireAuth?: boolean }) => {
@@ -89,7 +91,8 @@ const App = () => {
             </Layout>
           } 
         />
-        <Route 
+        {/* TODO: Add the other exercises */}
+        {/* <Route 
           path="/exercises/g-k" 
           element={
             <Layout>
@@ -121,7 +124,7 @@ const App = () => {
             </Layout>
           } 
         />
-        
+         */}
         {/* Dictionary Route */}
         <Route 
           path="/dictionary" 
@@ -133,7 +136,23 @@ const App = () => {
         />
         
         {/* PvP Routes */}
+        {/* <Route 
+          path="/pvp/game/:word/:matchid" 
+          element={
+            <Layout>
+              <GamePage />
+            </Layout>
+          } 
+        /> */}
         <Route 
+          path="/pvp/gameb/:word/:matchid" 
+          element={
+            <Layout>
+              <GameBPage />
+            </Layout>
+          } 
+        />
+         <Route 
           path="/pvp/create" 
           element={
             <Layout>
